@@ -9,22 +9,18 @@ namespace PopCubes
             return new Cell2D<T>(i, j);
         }
     }
+
     public class Cell2D<T>
     {
         public T Data { get; set; }
-        public int I { get;  }
-        public int J { get;  }
+        public int I { get; }
+        public int J { get; }
 
         public Cell2D(int i, int j)
         {
             I = i;
             J = j;
         }
-
-        public virtual void Reset()
-        {
-            
-        }
- 
+        
     }
 }

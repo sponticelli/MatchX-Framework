@@ -9,17 +9,25 @@
       <e p="Assets" t="Include">
         <e p="Game" t="Include">
           <e p="Runtime" t="Include">
-            <e p="Cell2D.cs" t="Include" />
-            <e p="Cells" t="Include">
-              <e p="Cell2DBool.cs" t="Include" />
+            <e p="Core" t="Include">
+              <e p="Algorithms" t="Include">
+                <e p="IMatchMaker.cs" t="Include" />
+                <e p="OrthogonalMatchMaker.cs" t="Include" />
+              </e>
+              <e p="Cell2D.cs" t="Include" />
+              <e p="Grid2D.cs" t="Include" />
             </e>
             <e p="Game-Runtime.asmdef" t="Include" />
-            <e p="Grid2D.cs" t="Include" />
+            <e p="GameGrid.cs" t="Include" />
+            <e p="Tiles" t="Include">
+              <e p="BlockTile.cs" t="Include" />
+              <e p="ITile.cs" t="Include" />
+            </e>
           </e>
           <e p="Tests" t="Include">
             <e p="EditMode" t="Include">
               <e p="EditMode.asmdef" t="Include" />
-              <e p="grid2.cs" t="Include" />
+              <e p="Grid2D.cs" t="Include" />
             </e>
           </e>
         </e>

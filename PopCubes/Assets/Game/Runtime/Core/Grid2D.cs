@@ -9,7 +9,7 @@ namespace PopCubes
 {
     public class Grid2D<TCell, TData> : IEnumerable where TCell : Cell2D<TData>
     {
-        private List<TCell> _cells;
+        protected List<TCell> _cells;
         public int Height { get; }
         public int Width { get; }
 
@@ -29,6 +29,11 @@ namespace PopCubes
             }
         }
 
+        public int CellIndex(TCell cell)
+        {
+            return CellIndex(cell.I, cell.J);
+        }
+
         public int CellIndex(int i, int j)
         {
             return j * Width + i;
@@ -37,6 +42,11 @@ namespace PopCubes
         public TData GetData(int i, int j)
         {
             return _cells[CellIndex(i, j)].Data;
+        }
+
+        public TCell GetCell(int i, int j)
+        {
+            return _cells[CellIndex(i, j)];
         }
 
         public void SetData(int i, int j, TData data)
@@ -75,6 +85,7 @@ namespace PopCubes
         {
             currentIndex = -1;
         }
+
         object IEnumerator.Current => Current;
 
         public TCell Current
