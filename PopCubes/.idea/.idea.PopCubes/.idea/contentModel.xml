@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\sandr\.Rider2019.2\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\sandr\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_PopCubes.996326595.00" t="ExcludeRecursive" />
+    <e p="C:\Users\sandr\Documents\gitignore_global.txt" t="IncludeRecursive" />
+    <e p="D:\Projects\LiteNinja\PopCubes\PopCubes" t="IncludeRecursive">
+      <e p=".git\info\exclude" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="Game" t="Include">
+          <e p="Runtime" t="Include">
+            <e p="Cell2D.cs" t="Include" />
+            <e p="Cells" t="Include">
+              <e p="Cell2DBool.cs" t="Include" />
+            </e>
+            <e p="Game-Runtime.asmdef" t="Include" />
+            <e p="Grid2D.cs" t="Include" />
+          </e>
+          <e p="Tests" t="Include">
+            <e p="EditMode" t="Include">
+              <e p="EditMode.asmdef" t="Include" />
+              <e p="grid2.cs" t="Include" />
+            </e>
+          </e>
+        </e>
+      </e>
+      <e p="EditMode.csproj" t="IncludeRecursive" />
+      <e p="Game-Runtime.csproj" t="IncludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="Packages" t="ExcludeRecursive" />
+      <e p="PopCubes.sln" t="IncludeFlat" />
+      <e p="Temp\bin" t="ExcludeRecursive" />
+    </e>
+  </component>
+</project>
