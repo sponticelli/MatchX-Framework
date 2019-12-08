@@ -4,27 +4,24 @@ using System.Linq;
 
 namespace PopCubes
 {
-    public class OrthogonalMatchMaker<TCell, TData> : IMatchMaker<TCell, TData> where TCell : Cell2D<TData>
+    public class OrthogonalMatchMaker<T> : IMatchMaker<T>
     {
-        private struct Coord
-        {
-            public int I, J;
-        }
 
-        private readonly List<Coord> _orthoNeighbours = new List<Coord>()
+
+        private readonly List<CellIndex> _orthoNeighbours = new List<CellIndex>()
         {
-            new Coord() {I = 0, J = -1}, //TOP
-            new Coord() {I = -1, J = 0}, // LEFT
-            new Coord() {I = 1, J = 0}, //RIGHT
-            new Coord() {I = 0, J = 1} //BOTTOM
+            new CellIndex(0,-1) , //TOP
+            new CellIndex(-1,0), // LEFT
+            new CellIndex(1, 0), //RIGHT
+            new CellIndex(0, 1) //BOTTOM
         };
 
-        public List<TCell> Find(Grid2D<TCell, TData> grid, TCell startingCell, Func<TData, TData, bool> evaluator)
+        public List<Cell2D<T>> Find(Grid2D<T> grid, Cell2D<T> startingCell, Func<T, T, bool> evaluator)
         {
-            var result = new List<TCell>();
-            var stack = new Stack<TCell>();
+            var result = new List<Cell2D<T>>();
+            var stack = new Stack<Cell2D<T>>();
             stack.Push(startingCell);
-            var visitedCells = new Grid2D<Cell2D<bool>, bool>(grid.Width, grid.Height);
+            var visitedCells = new Grid2D<bool>(grid.Width, grid.Height);
             visitedCells.SetData(startingCell.I, startingCell.J, true);
             while (stack.Count > 0)
             {
@@ -37,8 +34,8 @@ namespace PopCubes
             return result;
         }
 
-        private void CheckNeighbours(Grid2D<TCell, TData> grid, TCell cell, Grid2D<Cell2D<bool>, bool> visitedCells,
-            Stack<TCell> stack)
+        private void CheckNeighbours(Grid2D<T> grid, Cell2D<T> cell, Grid2D<bool> visitedCells,
+            Stack<Cell2D<T>> stack)
         {
             foreach (var o in _orthoNeighbours)
             {

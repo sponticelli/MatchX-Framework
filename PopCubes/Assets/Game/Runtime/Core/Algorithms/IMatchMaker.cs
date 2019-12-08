@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace PopCubes
 {
-    public interface IMatchMaker<TCell, TData> where TCell : Cell2D<TData>
+    public interface IMatchMaker<T> 
     {
-         List<TCell> Find(Grid2D<TCell, TData> grid, TCell startingCell, Func<TData, TData, bool> evaluator);
+         List<Cell2D<T>> Find(Grid2D<T> grid, Cell2D<T> startingCell, Func<T, T, bool> evaluator);
     }
 }

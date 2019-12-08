@@ -7,9 +7,9 @@ using Object = System.Object;
 
 namespace PopCubes
 {
-    public class Grid2D<TCell, TData> : IEnumerable where TCell : Cell2D<TData>
+    public class Grid2D<T> : IEnumerable
     {
-        protected List<TCell> _cells;
+        protected List<Cell2D<T>> _cells;
         public int Height { get; }
         public int Width { get; }
 
@@ -19,17 +19,17 @@ namespace PopCubes
             Width = width;
             Height = height;
 
-            _cells = new List<TCell>();
+            _cells = new List<Cell2D<T>>();
             for (var j = 0; j < Height; j++)
             {
                 for (var i = 0; i < Width; i++)
                 {
-                    _cells.Add((TCell) Cell2D.CreateInstance<TData>(i, j));
+                    _cells.Add(new Cell2D<T>(i, j));
                 }
             }
         }
 
-        public int CellIndex(TCell cell)
+        public int CellIndex(Cell2D<T> cell)
         {
             return CellIndex(cell.I, cell.J);
         }
@@ -39,24 +39,24 @@ namespace PopCubes
             return j * Width + i;
         }
 
-        public TData GetData(int i, int j)
+        public T GetData(int i, int j)
         {
             return _cells[CellIndex(i, j)].Data;
         }
 
-        public TCell GetCell(int i, int j)
+        public Cell2D<T> GetCell(int i, int j)
         {
             return _cells[CellIndex(i, j)];
         }
 
-        public void SetData(int i, int j, TData data)
+        public void SetData(int i, int j, T data)
         {
             _cells[CellIndex(i, j)].Data = data;
         }
 
-        public Cell2DEnum<TCell, TData> GetEnumerator()
+        public Cell2DEnum<T> GetEnumerator()
         {
-            return new Cell2DEnum<TCell, TData>(_cells);
+            return new Cell2DEnum<T>(_cells);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -65,12 +65,12 @@ namespace PopCubes
         }
     }
 
-    public class Cell2DEnum<TCell, TData> : IEnumerator where TCell : Cell2D<TData>
+    public class Cell2DEnum<T> : IEnumerator
     {
-        private List<TCell> _cells;
+        private List<Cell2D<T>> _cells;
         int currentIndex = -1;
 
-        public Cell2DEnum(List<TCell> cells)
+        public Cell2DEnum(List<Cell2D<T>> cells)
         {
             _cells = cells;
         }
@@ -88,7 +88,7 @@ namespace PopCubes
 
         object IEnumerator.Current => Current;
 
-        public TCell Current
+        public Cell2D<T> Current
         {
             get
             {

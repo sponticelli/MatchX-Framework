@@ -1,6 +1,6 @@
 ﻿namespace PopCubes
 {
-    public class GameGrid : Grid2D<Cell2D<ITile>, ITile>
+    public class GameGrid : Grid2D<ITile>
     {
         public GameGrid(int width, int height) : base(width, height)
         {
