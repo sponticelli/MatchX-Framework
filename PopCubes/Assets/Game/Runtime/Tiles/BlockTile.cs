@@ -7,7 +7,6 @@
         Block3,
         Block4,
         Block5,
-        Block6,
         RandomBlock,
         Empty,
     }

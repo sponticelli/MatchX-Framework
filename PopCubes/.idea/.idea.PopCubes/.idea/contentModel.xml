@@ -10,15 +10,25 @@
         <e p="Game" t="Include">
           <e p="Runtime" t="Include">
             <e p="Core" t="Include">
-              <e p="Algorithms" t="Include">
-                <e p="IMatchMaker.cs" t="Include" />
-                <e p="OrthogonalMatchMaker.cs" t="Include" />
+              <e p="Grid" t="Include">
+                <e p="Algorithms" t="Include">
+                  <e p="IMatchMaker.cs" t="Include" />
+                  <e p="OrthogonalMatchMaker.cs" t="Include" />
+                </e>
+                <e p="Cell2D.cs" t="Include" />
+                <e p="Grid2D.cs" t="Include" />
               </e>
-              <e p="Cell2D.cs" t="Include" />
-              <e p="Grid2D.cs" t="Include" />
+              <e p="UI" t="Include">
+                <e p="AdjustCanvasToResolution.cs" t="Include" />
+                <e p="Resolutions" t="Include">
+                  <e p="ResolutionConfigScriptableObject.cs" t="Include" />
+                  <e p="ResolutionOverrideScriptableObject.cs" t="Include" />
+                </e>
+              </e>
             </e>
             <e p="Game-Runtime.asmdef" t="Include" />
             <e p="GameGrid.cs" t="Include" />
+            <e p="GridController.cs" t="Include" />
             <e p="Tiles" t="Include">
               <e p="BlockTile.cs" t="Include" />
               <e p="ITile.cs" t="Include" />
