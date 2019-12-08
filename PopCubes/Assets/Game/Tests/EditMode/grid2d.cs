@@ -15,7 +15,7 @@ namespace Tests
         {
             var width = 10;
             var height = 10;
-            var grid = new Grid2D<Cell2D<int>, int>(width, height);
+            var grid = new Grid2D<int>(width, height);
             foreach (var cell in grid)
             {
                 cell.Data = width * cell.J + cell.I;
@@ -30,13 +30,13 @@ namespace Tests
         {
             var width = 4;
             var height = 4;
-            var grid = new Grid2D<Cell2D<int>, int>(width, height);
+            var grid = new Grid2D<int>(width, height);
             grid.SetData(0, 0, 1);
             grid.SetData(1, 0, 1);
             grid.SetData(0, 1, 1);
             grid.SetData(1, 1, 1);
 
-            var matchMaker = new OrthogonalMatchMaker<Cell2D<int>, int>();
+            var matchMaker = new OrthogonalMatchMaker<int>();
             var result = matchMaker.Find(grid, grid.GetCell(0, 0), (int val1, int val2) => val1 == val2);
             Assert.AreEqual(4, result.Count);
         }
