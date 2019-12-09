@@ -1,2 +1,2 @@
-# PopCubes
-A match-2 game
+# MatchX-Framework
+A match-X game framework for Unity3D.
