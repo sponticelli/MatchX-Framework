@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using PopCubes;
+using ZigZaggle.MatchX;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-namespace PopCubes.PuzzleMatch
+namespace ZigZaggle.MatchX.PuzzleMatch
 {
 
     public class GridController : MonoBehaviour
@@ -26,7 +26,7 @@ namespace PopCubes.PuzzleMatch
         [Header("Tiles")] 
         public Sprite[] blockTileSprites;
         
-        private GameGrid grid;
+        private GameOrthoGrid orthoGrid;
         private Camera mainCamera;
         private float tileWidth;
         private float tileHeight;
@@ -45,12 +45,12 @@ namespace PopCubes.PuzzleMatch
         
         private void LoadGrid()
         {
-            grid = new GameGrid(6, 6);
-            for (var j = 0; j < grid.Height; j++)
+            orthoGrid = new GameOrthoGrid(6, 6);
+            for (var j = 0; j < orthoGrid.Height; j++)
             {
-                for (var i = 0; i < grid.Width; i++)
+                for (var i = 0; i < orthoGrid.Width; i++)
                 {
-                    grid.SetData(i, j, new BlockTile() { type = BlockType.RandomBlock});
+                    orthoGrid.SetData(i, j, new BlockTile() { type = BlockType.RandomBlock});
                 }
             }
         }
@@ -59,11 +59,11 @@ namespace PopCubes.PuzzleMatch
         {
             var tiles = new List<GameObject>();
             var tileContainer = new GameObject("BackgroundTiles");
-            for (var j = 0; j < grid.Height; j++)
+            for (var j = 0; j < orthoGrid.Height; j++)
             {
-                for (var i = 0; i < grid.Width; i++)
+                for (var i = 0; i < orthoGrid.Width; i++)
                 {
-                    var data = grid.GetData(i, j);
+                    var data = orthoGrid.GetData(i, j);
                     var tile = data as BlockTile;
                     if (tile != null && tile.type == BlockType.Empty)
                     {
@@ -97,18 +97,18 @@ namespace PopCubes.PuzzleMatch
         {
             var tiles = new List<GameObject>();
             var tileContainer = new GameObject("FrontTiles");
-            for (var j = 0; j < grid.Height; j++)
+            for (var j = 0; j < orthoGrid.Height; j++)
             {
-                for (var i = 0; i < grid.Width; i++)
+                for (var i = 0; i < orthoGrid.Width; i++)
                 {
-                    var data = grid.GetData(i, j);
+                    var data = orthoGrid.GetData(i, j);
                     var tile = data as BlockTile;
                     if (tile != null && tile.type == BlockType.Empty)
                     {
                         continue;
                     }
 
-                    var go = CreateBlock(tile.type, "Game", grid.Height - j);
+                    var go = CreateBlock(tile.type, "Game", orthoGrid.Height - j);
                     go.name = "Block_" + i +"_" +j ;
                     go.transform.parent = tileContainer.transform;
                     go.transform.position = new Vector2(i * (tileWidth + horizontalSpacing),
@@ -140,8 +140,8 @@ namespace PopCubes.PuzzleMatch
         
         private void CalcGridSize()
         {
-            totalWidth = (grid.Width - 1) * (tileWidth + horizontalSpacing);
-            totalHeight = (grid.Height - 1) * (tileHeight + verticalSpacing);
+            totalWidth = (orthoGrid.Width - 1) * (tileWidth + horizontalSpacing);
+            totalHeight = (orthoGrid.Height - 1) * (tileHeight + verticalSpacing);
         }
 
         private GameObject CreateBlock(BlockType type, string sortingLayer, int sortingOrder)

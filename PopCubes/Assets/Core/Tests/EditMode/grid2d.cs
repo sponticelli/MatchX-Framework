@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
-using PopCubes;
+using ZigZaggle.MatchX;
 using UnityEngine;
 using UnityEngine.TestTools;
 
@@ -15,10 +15,11 @@ namespace Tests
         {
             var width = 10;
             var height = 10;
-            var grid = new Grid2D<int>(width, height);
-            foreach (var cell in grid)
+            var grid = new OrthoGrid2D<int>(width, height);
+            foreach (var node in grid)
             {
-                cell.Data = width * cell.J + cell.I;
+                var cell = (Cell2D<int>) node;
+                node.Data = width * cell.J + cell.I;
             }
 
             var cellData = grid.GetData(width / 2, height / 2);
@@ -30,7 +31,7 @@ namespace Tests
         {
             var width = 4;
             var height = 4;
-            var grid = new Grid2D<int>(width, height);
+            var grid = new OrthoGrid2D<int>(width, height);
             grid.SetData(0, 0, 1);
             grid.SetData(1, 0, 1);
             grid.SetData(0, 1, 1);
@@ -46,7 +47,7 @@ namespace Tests
         {
             var width = 2;
             var height = 2;
-            var grid = new GameGrid(width, height);
+            var grid = new GameOrthoGrid(width, height);
             grid.SetData(0, 0, new BlockTile() { type = BlockType.Block1});
             grid.SetData(1, 0, new BlockTile() { type = BlockType.Block2});
             grid.SetData(0, 1, new BlockTile() { type = BlockType.Block3});

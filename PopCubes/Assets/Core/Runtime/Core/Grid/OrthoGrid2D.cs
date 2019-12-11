@@ -5,26 +5,49 @@ using UnityEngine;
 using ZigZaggle.UnityExtensions;
 using Object = System.Object;
 
-namespace PopCubes
+namespace ZigZaggle.MatchX
 {
-    public class Grid2D<T> : IEnumerable
+    public class OrthoGrid2D<T> : Graph<T>, IEnumerable
     {
-        protected List<Cell2D<T>> _cells;
         public int Height { get; }
         public int Width { get; }
 
 
-        public Grid2D(int width, int height)
+        public OrthoGrid2D(int width, int height) : base()
         {
             Width = width;
             Height = height;
+            
+            CreateNodes();
+            CreateEdges();
+        }
 
-            _cells = new List<Cell2D<T>>();
+        private void CreateEdges()
+        {
+            foreach (var fromNode in Nodes)
+            {
+                var cell = (Cell2D<T>) fromNode;
+                for (var j = cell.J-1; j <= cell.J+1; j++)
+                {
+                    if (j < 0 || j>=Height) continue;
+                    for (var i = cell.I-1; i <= cell.I+1; i++)
+                    {
+                        if (i<0 || i>=Width || i == cell.I && j == cell.J) continue;
+                        var toCell = GetCell(i, j);
+                        AddEdge(fromNode, toCell);
+                    }
+                }
+            }
+        }
+
+        private void CreateNodes()
+        {
             for (var j = 0; j < Height; j++)
             {
                 for (var i = 0; i < Width; i++)
                 {
-                    _cells.Add(new Cell2D<T>(i, j));
+                    var cell = new Cell2D<T>(i, j);
+                    Nodes.Add(cell);
                 }
             }
         }
@@ -41,22 +64,23 @@ namespace PopCubes
 
         public T GetData(int i, int j)
         {
-            return _cells[CellIndex(i, j)].Data;
+            var node = Nodes[CellIndex(i, j)];
+            return node.Data;
         }
 
         public Cell2D<T> GetCell(int i, int j)
         {
-            return _cells[CellIndex(i, j)];
+            return (Cell2D<T>)Nodes[CellIndex(i, j)];
         }
 
         public void SetData(int i, int j, T data)
         {
-            _cells[CellIndex(i, j)].Data = data;
+            Nodes[CellIndex(i, j)].Data = data;
         }
 
-        public Cell2DEnum<T> GetEnumerator()
+        public NodeEnum<T> GetEnumerator()
         {
-            return new Cell2DEnum<T>(_cells);
+            return new NodeEnum<T>(Nodes);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -65,20 +89,20 @@ namespace PopCubes
         }
     }
 
-    public class Cell2DEnum<T> : IEnumerator
+    public class NodeEnum<T> : IEnumerator
     {
-        private List<Cell2D<T>> _cells;
+        private readonly List<Node<T>> nodes;
         int currentIndex = -1;
 
-        public Cell2DEnum(List<Cell2D<T>> cells)
+        public NodeEnum(List<Node<T>> nodes)
         {
-            _cells = cells;
+            this.nodes = nodes;
         }
 
         public bool MoveNext()
         {
             currentIndex++;
-            return (currentIndex < _cells.Count);
+            return (currentIndex < nodes.Count);
         }
 
         public void Reset()
@@ -88,13 +112,13 @@ namespace PopCubes
 
         object IEnumerator.Current => Current;
 
-        public Cell2D<T> Current
+        public Node<T> Current
         {
             get
             {
                 try
                 {
-                    return _cells[currentIndex];
+                    return nodes[currentIndex];
                 }
                 catch (IndexOutOfRangeException)
                 {

@@ -1,6 +1,6 @@
 ﻿using System.Resources;
 
-namespace PopCubes
+namespace ZigZaggle.MatchX
 {
     public class CellIndex
     {
@@ -12,17 +12,10 @@ namespace PopCubes
             J = j;
         }
     }
-    public static class Cell2D
-    {
-        public static Cell2D<T> CreateInstance<T>(int i, int j)
-        {
-            return new Cell2D<T>(i, j);
-        }
-    }
 
-    public class Cell2D<T>
+    public class Cell2D<T>: Node<T>
     {
-        public T Data { get; set; }
+
         public CellIndex Index { get; }
         public int I => Index.I;
         public int J => Index.J;
@@ -33,10 +26,7 @@ namespace PopCubes
             Reset();
         }
 
-        public void Reset()
-        {
-            Data = default(T);
-        }
+        
         
     }
 }

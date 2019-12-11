@@ -1,4 +1,4 @@
-﻿namespace PopCubes
+﻿namespace ZigZaggle.MatchX
 {
     public interface ITile
     {

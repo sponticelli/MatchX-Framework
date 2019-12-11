@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PopCubes
+namespace ZigZaggle.MatchX
 {
     [CreateAssetMenu(fileName = "ResolutionConfig", menuName = "ScriptableObjects/ResolutionConfig", order = 1)]
     public class ResolutionConfigScriptableObject : ScriptableObject

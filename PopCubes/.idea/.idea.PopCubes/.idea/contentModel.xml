@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ContentModelStore">
-    <e p="C:\Users\sandr\.Rider2019.2\system\extResources" t="IncludeRecursive" />
-    <e p="C:\Users\sandr\.Rider2019.2\system\resharper-host\local\Transient\ReSharperHost\v192\SolutionCaches\_PopCubes.996326595.00" t="ExcludeRecursive" />
-    <e p="C:\Users\sandr\Documents\gitignore_global.txt" t="IncludeRecursive" />
+    <e p="C:\Users\sandr\.Rider2019.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\sandr\.Rider2019.3\system\resharper-host\local\Transient\ReSharperHost\v193\SolutionCaches\_PopCubes.996326595.00" t="ExcludeRecursive" />
     <e p="D:\Projects\LiteNinja\PopCubes\PopCubes" t="IncludeRecursive">
-      <e p=".git\info\exclude" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="Game" t="Include">
+        <e p="Core" t="Include">
           <e p="Runtime" t="Include">
             <e p="Core" t="Include">
+              <e p="Graph" t="Include">
+                <e p="Edge.cs" t="Include" />
+                <e p="Graph.cs" t="Include" />
+                <e p="Node.cs" t="Include" />
+              </e>
               <e p="Grid" t="Include">
                 <e p="Algorithms" t="Include">
                   <e p="IMatchMaker.cs" t="Include" />
                   <e p="OrthogonalMatchMaker.cs" t="Include" />
                 </e>
                 <e p="Cell2D.cs" t="Include" />
-                <e p="Grid2D.cs" t="Include" />
+                <e p="OrthoGrid2D.cs" t="Include" />
               </e>
               <e p="UI" t="Include">
                 <e p="AdjustCanvasToResolution.cs" t="Include" />
@@ -26,9 +29,11 @@
                 </e>
               </e>
             </e>
+            <e p="Game" t="Include">
+              <e p="GameOrthoGrid.cs" t="Include" />
+              <e p="GridController.cs" t="Include" />
+            </e>
             <e p="Game-Runtime.asmdef" t="Include" />
-            <e p="GameGrid.cs" t="Include" />
-            <e p="GridController.cs" t="Include" />
             <e p="Tiles" t="Include">
               <e p="BlockTile.cs" t="Include" />
               <e p="ITile.cs" t="Include" />
