@@ -17,7 +17,7 @@ namespace ZigZaggle.Core.Cameras
         [SerializeField] 
         private float zoomSpeed = 20f;
 
-        private UnityEngine.Camera camera;
+        private Camera myCamera;
 
         public void SetTargets(GameObject[] transformTargets)
         {
@@ -26,8 +26,8 @@ namespace ZigZaggle.Core.Cameras
 
         private void Awake()
         {
-            camera = gameObject.GetComponent<Camera>();
-            camera.orthographic = true;
+            myCamera = gameObject.GetComponent<Camera>();
+            myCamera.orthographic = true;
         }
 
         public void UpdateCamera()
@@ -35,7 +35,7 @@ namespace ZigZaggle.Core.Cameras
             if (targets.Length == 0) return;
             var boundingBox = CalculateTargetsBoundingBox();
             transform.position = CalculateCameraPosition(boundingBox);
-            camera.orthographicSize = CalculateOrthographicSize(boundingBox);
+            myCamera.orthographicSize = CalculateOrthographicSize(boundingBox);
         }
 
         void LateUpdate()
@@ -43,7 +43,7 @@ namespace ZigZaggle.Core.Cameras
             if (!realTimeUpdate) return;
             var boundingBox = CalculateTargetsBoundingBox();
             transform.position = CalculateCameraPosition(boundingBox);
-            camera.orthographicSize = Mathf.Lerp(camera.orthographicSize, CalculateOrthographicSize(boundingBox),
+            myCamera.orthographicSize = Mathf.Lerp(myCamera.orthographicSize, CalculateOrthographicSize(boundingBox),
                 Time.deltaTime * zoomSpeed);
         }
 
@@ -80,10 +80,10 @@ namespace ZigZaggle.Core.Cameras
         {
             float orthographicSize;
             var topRight = new Vector3(boundingBox.x + boundingBox.width, boundingBox.y, 0f);
-            var (x, y, _) = camera.WorldToViewportPoint(topRight);
+            var (x, y, _) = myCamera.WorldToViewportPoint(topRight);
 
             if (x >= y)
-                orthographicSize = Mathf.Abs(boundingBox.width) / camera.aspect / 2f;
+                orthographicSize = Mathf.Abs(boundingBox.width) / myCamera.aspect / 2f;
             else
                 orthographicSize = Mathf.Abs(boundingBox.height) / 2f;
 

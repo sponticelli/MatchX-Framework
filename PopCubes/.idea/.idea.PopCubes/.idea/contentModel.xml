@@ -37,6 +37,69 @@
               <e p="IListExtensions.cs" t="Include" />
               <e p="Vector2IntExtensions.cs" t="Include" />
             </e>
+            <e p="Math" t="Include">
+              <e p="Easing.cs" t="Include" />
+              <e p="Interpolation.cs" t="Include" />
+            </e>
+            <e p="Tween" t="Include">
+              <e p="Tween.cs" t="Include" />
+              <e p="TweenManager.cs" t="Include" />
+              <e p="TweenOps" t="Include">
+                <e p="Audio" t="Include">
+                  <e p="PanStereoTween.cs" t="Include" />
+                  <e p="PitchTween.cs" t="Include" />
+                  <e p="VolumeTween.cs" t="Include" />
+                </e>
+                <e p="Camera" t="Include">
+                  <e p="CameraBackgroundColorTween.cs" t="Include" />
+                  <e p="FieldOfViewTween.cs" t="Include" />
+                </e>
+                <e p="GUI" t="Include">
+                  <e p="AnchoredPositionTween.cs" t="Include" />
+                  <e p="CanvasGroupAlphaTween.cs" t="Include" />
+                  <e p="TextColor.cs" t="Include" />
+                  <e p="TextMeshColor.cs" t="Include" />
+                </e>
+                <e p="Image" t="Include">
+                  <e p="ImageColorTween.cs" t="Include" />
+                  <e p="RawImageColorTween.cs" t="Include" />
+                </e>
+                <e p="Light" t="Include">
+                  <e p="LightColorTween.cs" t="Include" />
+                  <e p="LightIntensityTween.cs" t="Include" />
+                  <e p="LightRangeTween.cs" t="Include" />
+                </e>
+                <e p="Shader" t="Include">
+                  <e p="ShaderColorTween.cs" t="Include" />
+                  <e p="ShaderFloatTween.cs" t="Include" />
+                  <e p="ShaderIntTween.cs" t="Include" />
+                  <e p="ShaderVector.cs" t="Include" />
+                </e>
+                <e p="Sprite" t="Include">
+                  <e p="SpriteRendererColorTween.cs" t="Include" />
+                </e>
+                <e p="Transform" t="Include">
+                  <e p="LocalPositionTween.cs" t="Include" />
+                  <e p="LocalRotationTween.cs" t="Include" />
+                  <e p="LocalScaleTween.cs" t="Include" />
+                  <e p="PositionTween.cs" t="Include" />
+                  <e p="RotateTween.cs" t="Include" />
+                  <e p="RotationTween.cs" t="Include" />
+                  <e p="ShakePositionTween.cs" t="Include" />
+                  <e p="SizeTween.cs" t="Include" />
+                </e>
+                <e p="TweenOperation.cs" t="Include" />
+                <e p="Value" t="Include">
+                  <e p="ColorTween.cs" t="Include" />
+                  <e p="FloatTween.cs" t="Include" />
+                  <e p="IntTween.cs" t="Include" />
+                  <e p="RectTween.cs" t="Include" />
+                  <e p="Vector2Tween.cs" t="Include" />
+                  <e p="Vector3Tween.cs" t="Include" />
+                  <e p="Vector4Tween.cs" t="Include" />
+                </e>
+              </e>
+            </e>
           </e>
         </e>
         <e p="Games" t="Include">
@@ -50,7 +113,9 @@
               <e p="Data" t="Include">
                 <e p="Block.cs" t="Include" />
               </e>
-              <e p="GridController.cs" t="Include" />
+              <e p="Logic" t="Include">
+                <e p="GridController.cs" t="Include" />
+              </e>
             </e>
           </e>
         </e>
