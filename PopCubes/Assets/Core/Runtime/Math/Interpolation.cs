@@ -8,6 +8,11 @@ namespace ZigZaggle.Core.Math
         {
             return (to - from) * percentage + from;
         }
+        
+        public static int LinearInterpolate(int from, int to, float percentage)
+        {
+            return (int) ((to - @from) * percentage + @from);
+        }
 
         public static Vector2 LinearInterpolate(Vector2 from, Vector2 to, float percentage)
         {
