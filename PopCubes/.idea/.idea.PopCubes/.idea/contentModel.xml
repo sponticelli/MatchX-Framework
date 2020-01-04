@@ -10,8 +10,9 @@
           <e p="Runtime" t="Include">
             <e p="Algorithms" t="Include">
               <e p="Gravity" t="Include">
+                <e p="DownGravity.cs" t="Include" />
                 <e p="IGravity.cs" t="Include" />
-                <e p="VerticalGravity.cs" t="Include" />
+                <e p="RightGravity.cs" t="Include" />
               </e>
               <e p="MatchMaking" t="Include">
                 <e p="AbstractMatchMaker.cs" t="Include" />
@@ -54,6 +55,7 @@
                   <e p="CameraBackgroundColorTween.cs" t="Include" />
                   <e p="FieldOfViewTween.cs" t="Include" />
                 </e>
+                <e p="GenericTweenOperation.cs" t="Include" />
                 <e p="GUI" t="Include">
                   <e p="AnchoredPositionTween.cs" t="Include" />
                   <e p="CanvasGroupAlphaTween.cs" t="Include" />
@@ -90,11 +92,11 @@
                 </e>
                 <e p="TweenOperation.cs" t="Include" />
                 <e p="Value" t="Include">
-                  <e p="ColorTween.cs" t="Include" />
-                  <e p="FloatTween.cs" t="Include" />
-                  <e p="IntTween.cs" t="Include" />
-                  <e p="RectTween.cs" t="Include" />
-                  <e p="Vector2Tween.cs" t="Include" />
+                  <e p="ColorTweenOperation.cs" t="Include" />
+                  <e p="FloatTweenOperation.cs" t="Include" />
+                  <e p="IntTweenOperation.cs" t="Include" />
+                  <e p="RectTweenOperation.cs" t="Include" />
+                  <e p="Vector2TweenOperation.cs" t="Include" />
                   <e p="Vector3Tween.cs" t="Include" />
                   <e p="Vector4Tween.cs" t="Include" />
                 </e>
@@ -114,6 +116,7 @@
                 <e p="Block.cs" t="Include" />
               </e>
               <e p="Logic" t="Include">
+                <e p="GameLogic.cs" t="Include" />
                 <e p="GridController.cs" t="Include" />
               </e>
             </e>
