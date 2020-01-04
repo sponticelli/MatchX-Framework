@@ -1,25 +1,33 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
+using UnityEngine;
 using ZigZaggle.Core.Math;
-
 
 namespace ZigZaggle.Core.Tweening
 {
-    internal class FloatTween : TweenOperation
+    public class GenericTweenOperation<T> : TweenOperation
     {
-        public float EndValue { get; set; }
+        public T EndValue { get; set; }
 
-        private readonly Action<float> valueUpdatedCallback;
-        private float start;
+        private readonly Action<T> valueUpdatedCallback;
+        private readonly Func< T, T, float, T> interpolation;
+        private T start;
 
-        public FloatTween(float startValue, float endValue, Action<float> valueUpdatedCallback, float duration,
-            float delay, bool obeyTimescale, AnimationCurve curve, Tween.TweenLoopType tweenLoop, Action startCallback,
-            Action completeCallback)
+        public GenericTweenOperation(T startValue, 
+            T endValue, 
+            Action<T> valueUpdatedCallback, 
+            float duration,
+            float delay, 
+            bool obeyTimescale, AnimationCurve curve, 
+            Tween.TweenLoopType tweenLoop, 
+            Action startCallback,
+            Action completeCallback,
+            Func<T,T,float, T> interpolate)
         {
             SetCommonProperties(Tween.TweenType.Value, -1, duration, delay, obeyTimescale, curve, tweenLoop, startCallback,
                 completeCallback);
 
             this.valueUpdatedCallback = valueUpdatedCallback;
+            interpolation = interpolate;
             start = startValue;
             EndValue = endValue;
         }
@@ -31,7 +39,7 @@ namespace ZigZaggle.Core.Tweening
 
         protected override void Process(float percentage)
         {
-            var calculatedValue = Interpolation.LinearInterpolate(start, EndValue, percentage);
+            var calculatedValue = interpolation(start, EndValue, percentage);
             valueUpdatedCallback(calculatedValue);
         }
 
