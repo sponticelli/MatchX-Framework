@@ -684,6 +684,7 @@ MonoBehaviour:
   cellContainer: {fileID: 945075847}
   blockContainer: {fileID: 1353786755}
   minMatches: 2
+  blockMoveDuration: 0.2
 --- !u!1 &1558946040
 GameObject:
   m_ObjectHideFlags: 0

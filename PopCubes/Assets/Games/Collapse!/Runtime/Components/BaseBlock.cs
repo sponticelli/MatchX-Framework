@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
+using ZigZaggle.Core.Tweening;
 
 namespace ZigZaggle.Collapse.Components
 {
