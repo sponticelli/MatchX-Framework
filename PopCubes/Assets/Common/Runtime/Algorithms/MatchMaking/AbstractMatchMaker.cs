@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace ZigZaggle.MatchX.Common.Algorithms
 {
@@ -25,14 +26,13 @@ namespace ZigZaggle.MatchX.Common.Algorithms
         protected void CheckNeighbours(Grid2D<T> grid, Cell2D<T> cell, Grid2D<bool> visitedCells,
             Stack<Cell2D<T>> stack,  Func<T, T, bool> evaluator)
         {
-            var neighbours = GetNeighbours(cell, grid);            
-            
+            var neighbours = GetNeighbours(cell, grid);
             foreach (var neighbour in neighbours)
             {
                 if (visitedCells.Data(neighbour.Position)) continue;
+                visitedCells.SetData(neighbour.Position, true);
                 if (!evaluator(cell.Data, neighbour.Data)) continue;
                 stack.Push(neighbour);
-                visitedCells.SetData(neighbour.Position, true);
             }
         }
 

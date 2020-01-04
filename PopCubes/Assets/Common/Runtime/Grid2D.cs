@@ -33,6 +33,8 @@ namespace ZigZaggle.MatchX.Common
 
         public int CellIndex(int posX, int posY)
         {
+            if (posX < 0 || posX >= Width) return -1;
+            if (posY < 0 || posY >= Height) return -1;
             return posY * Width + posX;
         }
 
