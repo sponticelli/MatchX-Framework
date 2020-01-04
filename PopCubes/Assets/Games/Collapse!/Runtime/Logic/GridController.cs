@@ -30,12 +30,15 @@ namespace ZigZaggle.Collapse
 
         [Header("Rules")] 
         [SerializeField] private int minMatches = 2;
+
+        [Header("Config")] 
+        [SerializeField] private float blockMoveDuration = 3f;
         
-        private Grid2D<Block> grid;
+        
+        private GameLogic gameLogic;
         private List<Cell> cells = new List<Cell>();
         private List<BaseBlock> blocks = new List<BaseBlock>();
-        private IMatchMaker<Block> matchMaker = new OrthoMatchMaker<Block>();
-        private IGravity<Block> gravityMaker = new VerticalGravity<Block>();
+        
 
         private void Start()
         {
@@ -47,7 +50,7 @@ namespace ZigZaggle.Collapse
             if (cellContainer) cellContainer.transform.position = Vector3.zero;
             if (blockContainer) blockContainer.transform.position = Vector3.zero;
             
-            CreateGrid(); DebugGrid("CREATED");
+            gameLogic = new GameLogic(minMatches);
             CreateCells();
             CreateBlocks();
 
@@ -68,44 +71,36 @@ namespace ZigZaggle.Collapse
             if (hit.collider == null || !hit.collider.gameObject.CompareTag("Cell")) return;
             var cell = hit.collider.gameObject.GetComponent<Cell>();
             if (!cell) return;
-            var cell2d = grid.Cell(cell.Position);
-            if (cell2d.Data.type != BlockTypes.Normal) return;
-            var matches = matchMaker.Find(grid, cell2d, 
-                (block, block1) => block.type == block1.type && block.color == block1.color);
+            StartCoroutine(ExecuteMove(cell));
+        }
 
-            if (matches.IsNullOrEmpty() || matches.Count < minMatches) return;
-            
+        private IEnumerator ExecuteMove(Cell cell)
+        {
+            var matches = gameLogic.MakeMove(cell.Position);
             DestroyColoredBlocks(matches);
-            foreach (var m in matches)
-            {
-                grid.SetData(m.Position, new Block(BlockTypes.Empty));
-            }
-            DebugGrid("DESTROY");
-
-            var movements = gravityMaker.Apply(grid,
-                block => block.type == BlockTypes.Normal,
-                block => block.type == BlockTypes.Empty,
-                () => new Block(BlockTypes.Empty)
-            );
-
+            yield return new WaitForSeconds(matches.IsNullOrEmpty() ? 0 : 0.2f);
+            var movements = gameLogic.ApplyVerticalGravity();
             MoveBlocks(movements);
-            DebugGrid("GRAVITY");
+            yield return new WaitForSeconds(movements.IsNullOrEmpty() ? 0f : blockMoveDuration);
+            movements = gameLogic.ApplyHorizontalGravity();
+            MoveBlocks(movements);
         }
 
         private void MoveBlocks(List<GravityMovement> movements)
         {
+            if (movements.IsNullOrEmpty()) return;
             foreach (var move in movements)
             {
-                Debug.Log("From " + move.fromPos + " To " + move.toPos);
                 var block = FindByPosition(move.fromPos);
                 if (!block) continue;
                 block.Position = move.toPos;
-                block.Move(GetCellPosition(move.toPos.x, move.toPos.y), 1f);
+                block.Move(GetCellPosition(move.toPos.x, move.toPos.y), blockMoveDuration);
             }
         }
 
         private void DestroyColoredBlocks(List<Cell2D<Block>> matches)
         {
+            if (matches.IsNullOrEmpty()) return;
             var blockToDestroy = new List<Block>();
             foreach (var m in matches)
             {
@@ -135,24 +130,13 @@ namespace ZigZaggle.Collapse
         }
 
         #region Creation
-        private void CreateGrid()
-        {
-            grid = new Grid2D<Block>(4, 4);
-            for (var x = 0; x < grid.Width; x++)
-            {
-                for (var y = 0; y < grid.Height; y++)
-                {
-                    var color = Random.Range((int) BlockColors.Blue, (int)BlockColors.Purple);
-                    grid.SetData(x, y, new Block(BlockTypes.Normal,(BlockColors) color));
-                }
-            }
-        }
+        
         
         private void CreateCells()
         {
-            for (var y = 0; y < grid.Height; y++)
+            for (var y = 0; y < gameLogic.Height; y++)
             {
-                for (var x = 0; x < grid.Width; x++)
+                for (var x = 0; x < gameLogic.Width; x++)
                 {
                     var cellGo = CreateCellGo(x, y);
                     cells.Add(cellGo);
@@ -162,11 +146,11 @@ namespace ZigZaggle.Collapse
 
         private void CreateBlocks()
         {
-            for (var y = 0; y < grid.Height; y++)
+            for (var y = 0; y < gameLogic.Height; y++)
             {
-                for (var x = 0; x < grid.Width; x++)
+                for (var x = 0; x < gameLogic.Width; x++)
                 {
-                    var color = grid.Data(x, y).color;
+                    var color = gameLogic.Grid.Data(x, y).color;
                     var blockGo = CreateColoredBlock(x, y, color);
                     blocks.Add(blockGo);
                 }
@@ -196,13 +180,13 @@ namespace ZigZaggle.Collapse
 
         private Vector3 GetCellPosition(int x, int y)
         {
-            var idx = grid.CellIndex(x, y);
-            return grid.IsValid(idx) ? cells[idx].transform.position : Vector3.negativeInfinity;
+            var idx = gameLogic.Grid.CellIndex(x, y);
+            return gameLogic.Grid.IsValid(idx) ? cells[idx].transform.position : Vector3.negativeInfinity;
         }
         
         private Cell CreateCellGo(int x, int y)
         {
-            var idx = grid.CellIndex(x, y);
+            var idx = gameLogic.Grid.CellIndex(x, y);
             var prefabIdx = idx % cellPrefabs.Length;
             var cellGo = Instantiate(cellPrefabs[prefabIdx]);
             cellGo.name = "Cell_" + x + "_" + y;
@@ -221,23 +205,7 @@ namespace ZigZaggle.Collapse
         
         #endregion
 
-        private void DebugGrid(string info)
-        {
-            Debug.Log(info);
-            var s = "";
-            for (var y = 0; y < grid.Height; y++)
-            {
-                s += "\r\n";
-                for (var x = 0; x < grid.Width; x++)
-                {
-                    s += grid.Data(x, y).type == BlockTypes.Empty
-                        ? "-"
-                        : grid.Data(x, y).color.ToString().Substring(0, 1);
-                }
-               
-            }
-            Debug.Log(s);
-        }
+       
     }
     
     
