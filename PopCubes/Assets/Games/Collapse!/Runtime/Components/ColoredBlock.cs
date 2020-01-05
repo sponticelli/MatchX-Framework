@@ -20,7 +20,7 @@ namespace ZigZaggle.Collapse.Components
                 completeCallback: () =>
             {
                 Destroy(gameObject);
-            });
+            }).Start();
             
         }
 
@@ -28,11 +28,12 @@ namespace ZigZaggle.Collapse.Components
         {
             if (movement != null && movement.Status == Tween.TweenStatus.Running)
             {
-                movement = Tween.Position(transform, newPosition, seconds, movement.Duration);
+                movement.Then(Tween.Position(transform, newPosition, seconds, 0));
             }
             else
             {
                 movement = Tween.Position(transform, newPosition, seconds, 0);
+                movement.Start();
             }
         }
     }

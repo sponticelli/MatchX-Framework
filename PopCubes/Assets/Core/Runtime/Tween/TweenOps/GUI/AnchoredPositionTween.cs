@@ -7,6 +7,7 @@ namespace ZigZaggle.Core.Tweening
 {
     internal class AnchoredPositionTween : TweenOperation
     {
+        protected override bool interruptOnStart => true;
         public Vector2 EndValue { get; private set; }
 
 

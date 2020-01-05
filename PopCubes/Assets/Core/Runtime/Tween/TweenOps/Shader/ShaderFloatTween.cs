@@ -7,6 +7,7 @@ namespace ZigZaggle.Core.Tweening
 {
     internal class ShaderFloatTween : TweenOperation
     {
+        protected override bool interruptOnStart => true;
         public float EndValue { get; private set; }
         
         private readonly Material target;

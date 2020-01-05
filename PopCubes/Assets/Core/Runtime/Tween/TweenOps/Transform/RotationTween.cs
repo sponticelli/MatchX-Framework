@@ -7,6 +7,7 @@ namespace ZigZaggle.Core.Tweening
 {
     internal class RotationTween : TweenOperation
     {
+        protected override bool interruptOnStart => true;
         public Vector3 EndValue { get; private set; }
 
 

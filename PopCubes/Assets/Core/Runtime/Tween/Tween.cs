@@ -86,7 +86,6 @@ namespace ZigZaggle.Core.Tweening
         {
             var tween = new ShakePositionTween(target, initialPosition, intensity, duration, delay, Easing.EaseLinear,
                 startCallback, completeCallback, tweenLoop, obeyTimescale);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
 
@@ -96,7 +95,6 @@ namespace ZigZaggle.Core.Tweening
         {
             var tween = new CanvasGroupAlphaTween(target, endValue, duration, delay, obeyTimescale, easeCurve,
                 tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -115,7 +113,6 @@ namespace ZigZaggle.Core.Tweening
         {
             var tween = new RectTweenOperation(startValue, endValue, valueUpdatedCallback, duration, delay, obeyTimescale,
                 easeCurve, tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -125,7 +122,6 @@ namespace ZigZaggle.Core.Tweening
         {
             var tween = new Vector4Tween(startValue, endValue, valueUpdatedCallback, duration, delay,
                 obeyTimescale, easeCurve, tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween);
             return tween;
         }
         
@@ -135,7 +131,6 @@ namespace ZigZaggle.Core.Tweening
         {
             var tween = new Vector3Tween(startValue, endValue, valueUpdatedCallback, duration, delay,
                 obeyTimescale, easeCurve, tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween);
             return tween;
         }
         
@@ -145,7 +140,6 @@ namespace ZigZaggle.Core.Tweening
         {
             var tween = new Vector2TweenOperation(startValue, endValue, valueUpdatedCallback, duration, delay,
                 obeyTimescale, easeCurve, tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween);
             return tween;
         }
         
@@ -155,7 +149,6 @@ namespace ZigZaggle.Core.Tweening
         {
             var tween = new ColorTweenOperation(startValue, endValue, valueUpdatedCallback, duration, delay,
                 obeyTimescale, easeCurve, tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween);
             return tween;
         }
         
@@ -165,7 +158,6 @@ namespace ZigZaggle.Core.Tweening
         {
             var tween = new IntTweenOperation(startValue, endValue, valueUpdatedCallback, duration, delay, obeyTimescale,
                 easeCurve, tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween);
             return tween;
         }
         
@@ -175,7 +167,6 @@ namespace ZigZaggle.Core.Tweening
         {
             var tween = new FloatTweenOperation(startValue, endValue, valueUpdatedCallback, duration, delay,
                 obeyTimescale, easeCurve, tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween);
             return tween;
         }
         
@@ -183,9 +174,8 @@ namespace ZigZaggle.Core.Tweening
             float delay, AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            ShaderVector tween = new ShaderVector(target, propertyName, endValue, duration, delay, obeyTimescale,
+            var tween = new ShaderVector(target, propertyName, endValue, duration, delay, obeyTimescale,
                 easeCurve, tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -202,9 +192,8 @@ namespace ZigZaggle.Core.Tweening
             float delay, AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            ShaderIntTween tween = new ShaderIntTween(target, propertyName, endValue, duration, delay, obeyTimescale, easeCurve,
+            var tween = new ShaderIntTween(target, propertyName, endValue, duration, delay, obeyTimescale, easeCurve,
                 tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -221,9 +210,8 @@ namespace ZigZaggle.Core.Tweening
             float delay, AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            ShaderColorTween tween = new ShaderColorTween(target, propertyName, endValue, duration, delay, obeyTimescale,
+            var tween = new ShaderColorTween(target, propertyName, endValue, duration, delay, obeyTimescale,
                 easeCurve, tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -240,9 +228,8 @@ namespace ZigZaggle.Core.Tweening
             float delay, AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            ShaderFloatTween tween = new ShaderFloatTween(target, propertyName, endValue, duration, delay, obeyTimescale,
+            var tween = new ShaderFloatTween(target, propertyName, endValue, duration, delay, obeyTimescale,
                 easeCurve, tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -259,9 +246,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            PitchTween tween = new PitchTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop, startCallback,
+            var tween = new PitchTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop, startCallback,
                 completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -278,9 +264,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            PanStereoTween tween = new PanStereoTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
+            var tween = new PanStereoTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
                 startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -297,9 +282,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            VolumeTween tween = new VolumeTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop, startCallback,
+            var tween = new VolumeTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop, startCallback,
                 completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -316,9 +300,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            SizeTween tween = new SizeTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop, startCallback,
+            var tween = new SizeTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop, startCallback,
                 completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -335,9 +318,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            FieldOfViewTween tween = new FieldOfViewTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
+            var tween = new FieldOfViewTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
                 startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -354,9 +336,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            LightRangeTween tween = new LightRangeTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
+            var tween = new LightRangeTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
                 startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -373,9 +354,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            LightIntensityTween tween = new LightIntensityTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
+            var tween = new LightIntensityTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
                 startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -392,9 +372,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            LocalScaleTween tween = new LocalScaleTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
+            var tween = new LocalScaleTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
                 startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -411,9 +390,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            RawImageColorTween tween = new RawImageColorTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
+            var tween = new RawImageColorTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
                 startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -430,9 +408,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            ImageColorTween tween = new ImageColorTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
+            var tween = new ImageColorTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
                 startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -449,9 +426,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            TextColor tween = new TextColor(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
+            var tween = new TextColor(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
                 startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -468,9 +444,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            LightColorTween tween = new LightColorTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
+            var tween = new LightColorTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
                 startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -487,9 +462,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            TextMeshColor tween = new TextMeshColor(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
+            var tween = new TextMeshColor(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
                 startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -506,9 +480,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            ShaderColorTween tween = new ShaderColorTween(target, "_Color", endValue, duration, delay, obeyTimescale, easeCurve,
+            var tween = new ShaderColorTween(target, "_Color", endValue, duration, delay, obeyTimescale, easeCurve,
                 tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -543,9 +516,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            SpriteRendererColorTween tween = new SpriteRendererColorTween(target, endValue, duration, delay, obeyTimescale,
+            var tween = new SpriteRendererColorTween(target, endValue, duration, delay, obeyTimescale,
                 easeCurve, tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -562,9 +534,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            CameraBackgroundColorTween tween = new CameraBackgroundColorTween(target, endValue, duration, delay, obeyTimescale,
+            var tween = new CameraBackgroundColorTween(target, endValue, duration, delay, obeyTimescale,
                 easeCurve, tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -581,9 +552,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            PositionTween tween = new PositionTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
+            var tween = new PositionTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
                 startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -600,9 +570,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            AnchoredPositionTween tween = new AnchoredPositionTween(target, endValue, duration, delay, obeyTimescale, easeCurve,
+            var tween = new AnchoredPositionTween(target, endValue, duration, delay, obeyTimescale, easeCurve,
                 tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -619,9 +588,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            LocalPositionTween tween = new LocalPositionTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
+            var tween = new LocalPositionTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
                 startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -638,9 +606,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            RotateTween tween = new RotateTween(target, amount, space, duration, delay, obeyTimescale, easeCurve, tweenLoop,
+            var tween = new RotateTween(target, amount, space, duration, delay, obeyTimescale, easeCurve, tweenLoop,
                 startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -649,9 +616,8 @@ namespace ZigZaggle.Core.Tweening
             Action completeCallback = null, bool obeyTimescale = true)
         {
             endValue = Quaternion.Euler(endValue).eulerAngles;
-            RotationTween tween = new RotationTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
+            var tween = new RotationTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
                 startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -670,9 +636,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            RotationTween tween = new RotationTween(target, endValue.eulerAngles, duration, delay, obeyTimescale, easeCurve, tweenLoop,
+            var tween = new RotationTween(target, endValue.eulerAngles, duration, delay, obeyTimescale, easeCurve, tweenLoop,
                 startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -690,9 +655,8 @@ namespace ZigZaggle.Core.Tweening
             Action completeCallback = null, bool obeyTimescale = true)
         {
             endValue = Quaternion.Euler(endValue).eulerAngles;
-            LocalRotationTween tween = new LocalRotationTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
+            var tween = new LocalRotationTween(target, endValue, duration, delay, obeyTimescale, easeCurve, tweenLoop,
                 startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -711,9 +675,8 @@ namespace ZigZaggle.Core.Tweening
             AnimationCurve easeCurve = null, TweenLoopType tweenLoop = TweenLoopType.None, Action startCallback = null,
             Action completeCallback = null, bool obeyTimescale = true)
         {
-            LocalRotationTween tween = new LocalRotationTween(target, endValue.eulerAngles, duration, delay, obeyTimescale,
+            var tween = new LocalRotationTween(target, endValue.eulerAngles, duration, delay, obeyTimescale,
                 easeCurve, tweenLoop, startCallback, completeCallback);
-            SendTweenForProcessing(tween, true);
             return tween;
         }
         
@@ -746,9 +709,27 @@ namespace ZigZaggle.Core.Tweening
                 obeyTimescale);
         }
         
+        
+        
         #endregion
 
         #region utilities:
+        
+        public static void SendTweenForProcessing(TweenOperation tween, bool interrupt = false)
+        {
+            if (!Application.isPlaying)
+            {
+                //Tween can not be called in edit mode!
+                return;
+            }
+
+            if (interrupt && tween.Delay == 0)
+            {
+                StopInstanceTargetType(tween.targetInstanceID, tween.tweenType);
+            }
+
+            Instance.ExecuteTween(tween);
+        }
         
         public static void Stop(int targetInstanceID, TweenType tweenType)
         {
@@ -838,21 +819,6 @@ namespace ZigZaggle.Core.Tweening
             }
         }
 
-        private static void SendTweenForProcessing(TweenOperation tween, bool interrupt = false)
-        {
-            if (!Application.isPlaying)
-            {
-                //Tween can not be called in edit mode!
-                return;
-            }
-
-            if (interrupt && tween.Delay == 0)
-            {
-                StopInstanceTargetType(tween.targetInstanceID, tween.tweenType);
-            }
-
-            Instance.ExecuteTween(tween);
-        }
         
         #endregion
     }

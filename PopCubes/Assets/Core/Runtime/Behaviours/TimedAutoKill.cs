@@ -15,7 +15,7 @@ namespace ZigZaggle.Core.Behaviours
             accTime = 0;
         }
 
-        private void Start()
+        private void Update()
         {
             accTime += Time.deltaTime;
             if (accTime >= duration)

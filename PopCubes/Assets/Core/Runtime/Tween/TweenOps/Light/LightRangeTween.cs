@@ -6,6 +6,7 @@ namespace ZigZaggle.Core.Tweening
 {
     internal class LightRangeTween : TweenOperation
     {
+        protected override bool interruptOnStart => true;
         public float EndValue { get; private set; }
 
 

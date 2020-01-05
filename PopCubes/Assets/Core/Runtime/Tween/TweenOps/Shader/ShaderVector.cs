@@ -6,6 +6,7 @@ namespace ZigZaggle.Core.Tweening
 {
     internal class ShaderVector : TweenOperation
     {
+        protected override bool interruptOnStart => true;
         public Vector4 EndValue { get; private set; }
 
 

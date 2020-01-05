@@ -6,6 +6,7 @@ namespace ZigZaggle.Core.Tweening
 {
     internal class CanvasGroupAlphaTween : TweenOperation
     {
+        protected override bool interruptOnStart => true;
         private readonly CanvasGroup target;
         private float start;
 

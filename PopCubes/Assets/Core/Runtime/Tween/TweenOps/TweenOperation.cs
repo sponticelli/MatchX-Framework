@@ -6,10 +6,13 @@ namespace ZigZaggle.Core.Tweening
 {
     public abstract class TweenOperation
     {
+        private static TweenManager _instance;
         #region Protected Variables
 
+        protected virtual bool interruptOnStart => false;
         protected float elapsedTime = 0.0f;
-
+        protected TweenOperation attachedTween;
+        
         #endregion
 
         #region Public Variables
@@ -35,14 +38,31 @@ namespace ZigZaggle.Core.Tweening
         #endregion
 
         #region Public Methods
+        public static TweenManager Manager
+        {
+            get
+            {
+                if (_instance == null)
+                {
+                    _instance = new GameObject("TweenManager",
+                        typeof(TweenManager)).GetComponent<TweenManager>();
+                }
 
+                GameObject.DontDestroyOnLoad(_instance.gameObject);
+                return _instance;
+            }
+        }
         public void Stop()
         {
             Status = Tween.TweenStatus.Stopped;
         }
 
-
         public void Start()
+        {
+            Tween.SendTweenForProcessing(this, interruptOnStart);
+        }
+
+        public void Restart()
         {
             elapsedTime = 0.0f;
 
@@ -53,6 +73,19 @@ namespace ZigZaggle.Core.Tweening
             Tween.Instance.ExecuteTween(this);
         }
 
+        public TweenOperation Then(TweenOperation tweenOperation)
+        {
+            if (attachedTween != null)
+            {
+                attachedTween.Then(tweenOperation);
+            }
+            else
+            {
+                attachedTween = tweenOperation;
+            }
+
+            return this;
+        }
         public void Resume()
         {
             if (Status != Tween.TweenStatus.Stopped) return;
@@ -92,7 +125,8 @@ namespace ZigZaggle.Core.Tweening
                 {
                     Process(1);
                     Percentage = 1;
-                    if (CompleteCallback != null) CompleteCallback();
+                    CompleteCallback?.Invoke();
+                    attachedTween?.Start();
                     return false;
                 }
             }

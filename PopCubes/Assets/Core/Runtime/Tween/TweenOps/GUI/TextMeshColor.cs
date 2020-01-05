@@ -8,7 +8,7 @@ namespace ZigZaggle.Core.Tweening
 {
     internal class TextMeshColor : TweenOperation
     {
-        
+        protected override bool interruptOnStart => true;
         public Color EndValue {get; private set;}
 
         

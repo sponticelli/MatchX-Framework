@@ -7,6 +7,7 @@ namespace ZigZaggle.Core.Tweening
 {
     internal class RawImageColorTween : TweenOperation
     {
+        protected override bool interruptOnStart => true;
         public Color EndValue { get; private set; }
 
 

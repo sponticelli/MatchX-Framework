@@ -6,6 +6,7 @@ namespace ZigZaggle.Core.Tweening
 {
     internal class ShaderColorTween : TweenOperation
     {
+        protected override bool interruptOnStart => true;
         public Color EndValue { get; private set; }
 
 

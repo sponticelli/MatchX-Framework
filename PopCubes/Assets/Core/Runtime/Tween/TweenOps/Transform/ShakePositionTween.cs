@@ -5,6 +5,7 @@ namespace ZigZaggle.Core.Tweening
 {
     internal class ShakePositionTween : TweenOperation
     {
+        protected override bool interruptOnStart => true;
         private readonly Transform target;
         private readonly Vector3 initialPosition;
         private readonly Vector3 intensity;
