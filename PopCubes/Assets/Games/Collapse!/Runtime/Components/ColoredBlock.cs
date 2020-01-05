@@ -6,15 +6,20 @@ namespace ZigZaggle.Collapse.Components
 {
     public class ColoredBlock : BaseBlock
     {
+        [SerializeField] private GameObject explosionPrefab;
         private TweenOperation movement;
         public override void Explode()
         {
             base.Explode();
+            if (explosionPrefab != null)
+            {
+                var explosion = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+            }
             Tween.LocalScale(transform, Vector3.zero, 0.25f, 0, 
                 easeCurve: Easing.EaseInOutStrong,
                 completeCallback: () =>
             {
-                Destroy(this.gameObject);
+                Destroy(gameObject);
             });
             
         }

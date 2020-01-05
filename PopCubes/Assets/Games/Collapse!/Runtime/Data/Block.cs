@@ -22,15 +22,15 @@
         public BlockTypes type = BlockTypes.Empty;
         public BlockColors color = BlockColors.None;
 
-        public Block()
-        {
-            
-        }
-
         public Block(BlockTypes type, BlockColors color = BlockColors.None)
         {
             this.type = type;
             this.color = type != BlockTypes.Normal ? BlockColors.None : color;
+        }
+
+        public override string ToString()
+        {
+            return "[Type: " + type + " Color: " + color +"]";
         }
     }
 }

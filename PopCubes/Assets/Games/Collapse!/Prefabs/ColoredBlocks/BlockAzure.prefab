@@ -94,3 +94,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4be7ce7fc2ee4d098991bf34f1705ba2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onExplode:
+    m_PersistentCalls:
+      m_Calls: []
+  explosionPrefab: {fileID: 255292152459825375, guid: 33782ee6d250ef54da97dcf4d3a7219a,
+    type: 3}
