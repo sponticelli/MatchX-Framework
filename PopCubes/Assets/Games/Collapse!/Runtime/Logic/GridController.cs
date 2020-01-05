@@ -79,11 +79,16 @@ namespace ZigZaggle.Collapse
             var matches = gameLogic.MakeMove(cell.Position);
             DestroyColoredBlocks(matches);
             yield return new WaitForSeconds(matches.IsNullOrEmpty() ? 0 : 0.2f);
-            var movements = gameLogic.ApplyVerticalGravity();
-            MoveBlocks(movements);
-            yield return new WaitForSeconds(movements.IsNullOrEmpty() ? 0f : blockMoveDuration);
-            movements = gameLogic.ApplyHorizontalGravity();
-            MoveBlocks(movements);
+            var gravityResult = gameLogic.ApplyGravity();
+            for (var i = 0; i < gravityResult.Count; i++)
+            {
+                if (i != 0)
+                {
+                    yield return new WaitForSeconds(blockMoveDuration);
+                }
+                MoveBlocks(gravityResult[i]);
+            }            
+            
         }
 
         private void MoveBlocks(List<GravityMovement> movements)

@@ -48,7 +48,17 @@ namespace ZigZaggle.Collapse
             return matches;
         }
 
-        public List<GravityMovement> ApplyVerticalGravity()
+        public List<List<GravityMovement>> ApplyGravity()
+        {
+            var result = new List<List<GravityMovement>>();
+            var vertical = ApplyVerticalGravity();
+            if (!vertical.IsNullOrEmpty()) result.Add(vertical);
+            var horizontal = ApplyHorizontalGravity();
+            if (!horizontal.IsNullOrEmpty()) result.Add(horizontal);
+            return result;
+        }
+        
+        protected List<GravityMovement> ApplyVerticalGravity()
         {
             return verticalGravityMaker.Apply(Grid,
                 block => block.type == BlockTypes.Normal,
@@ -57,14 +67,13 @@ namespace ZigZaggle.Collapse
             );
         }
 
-        public List<GravityMovement> ApplyHorizontalGravity()
+        protected List<GravityMovement> ApplyHorizontalGravity()
         {
             var result = horizontalGravityMaker.Apply(Grid,
                 block => block.type == BlockTypes.Normal,
                 block => block.type == BlockTypes.Empty,
                 () => new Block(BlockTypes.Empty)
             );
-            DebugGrid("Gravity");
             return result;
         }
 
