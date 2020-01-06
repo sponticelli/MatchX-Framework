@@ -5,7 +5,9 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 using ZigZaggle.Collapse.Components;
+using ZigZaggle.Core.Audio;
 using ZigZaggle.Core.Cameras;
+using ZigZaggle.Core.UI;
 using ZigZaggle.MatchX.Common;
 using ZigZaggle.MatchX.Common.Algorithms;
 using ZigZaggle.MatchX.Common.Algorithms.Gravity;
@@ -33,12 +35,18 @@ namespace ZigZaggle.Collapse
 
         [Header("Config")] 
         [SerializeField] private float blockMoveDuration = 3f;
-        
+
+        [Header("Audio")] 
+        [SerializeField] private AudioClip clickBlock;
+        [SerializeField] private AudioClip errorClickBlock;
+
+        [Header("GUI")] 
+        [SerializeField] private AnimatedCounter scoreCounter;
         
         private GameLogic gameLogic;
         private List<Cell> cells = new List<Cell>();
         private List<BaseBlock> blocks = new List<BaseBlock>();
-        
+        private int score;
 
         private void Start()
         {
@@ -47,6 +55,9 @@ namespace ZigZaggle.Collapse
                 mainCamera = Camera.main;
             }
 
+            score = 0;
+            scoreCounter.CurrentValue = score;
+            
             if (cellContainer) cellContainer.transform.position = Vector3.zero;
             if (blockContainer) blockContainer.transform.position = Vector3.zero;
             
@@ -68,15 +79,35 @@ namespace ZigZaggle.Collapse
             if (!Input.GetMouseButtonDown(0)) return;
 
             var hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
-            if (hit.collider == null || !hit.collider.gameObject.CompareTag("Cell")) return;
+            if (hit.collider == null || !hit.collider.gameObject.CompareTag("Cell"))
+            {
+                SimpleSoundPlayer.Play(errorClickBlock);
+                return;
+            }
+           
             var cell = hit.collider.gameObject.GetComponent<Cell>();
-            if (!cell) return;
+            if (!cell)
+            {
+                SimpleSoundPlayer.Play(errorClickBlock);
+                return;
+            }
+            
+            
+            
             StartCoroutine(ExecuteMove(cell));
         }
 
         private IEnumerator ExecuteMove(Cell cell)
         {
             var matches = gameLogic.MakeMove(cell.Position);
+            if (matches.IsNullOrEmpty())
+            {
+                SimpleSoundPlayer.Play(errorClickBlock);
+                yield break;
+            }
+            SimpleSoundPlayer.Play(clickBlock);
+            score += matches.Count * 55;
+            scoreCounter.CurrentValue = score;
             DestroyColoredBlocks(matches);
             yield return new WaitForSeconds(matches.IsNullOrEmpty() ? 0 : 0.2f);
             var gravityResult = gameLogic.ApplyGravity();
