@@ -122,13 +122,17 @@
                 <e p="BaseBlock.cs" t="Include" />
                 <e p="Cell.cs" t="Include" />
                 <e p="ColoredBlock.cs" t="Include" />
+                <e p="GridController.cs" t="Include" />
               </e>
               <e p="Data" t="Include">
                 <e p="Block.cs" t="Include" />
               </e>
               <e p="Logic" t="Include">
                 <e p="GameLogic.cs" t="Include" />
-                <e p="GridController.cs" t="Include" />
+                <e p="GroupedLogicActions.cs" t="Include" />
+                <e p="ILogicAction.cs" t="Include" />
+                <e p="LogicActionMove.cs" t="Include" />
+                <e p="LogicActionRemove.cs" t="Include" />
               </e>
             </e>
           </e>

@@ -17,32 +17,24 @@ namespace ZigZaggle.Collapse
 {
     public class GridController : MonoBehaviour
     {
- 
-        [Header("Camera")]
-        [SerializeField] private CameraTrackTargets cameraTrackTargets;
+        [Header("Camera")] [SerializeField] private CameraTrackTargets cameraTrackTargets;
         [SerializeField] private Camera mainCamera;
-        
-        [Header("Prefabs")]
-        [SerializeField] private Cell[] cellPrefabs;
+
+        [Header("Prefabs")] [SerializeField] private Cell[] cellPrefabs;
         [SerializeField] private ColoredBlock[] coloredBlockPrefabs;
-        
-        [Header("Elements")] 
-        [SerializeField] private GameObject cellContainer;
+
+        [Header("Elements")] [SerializeField] private GameObject cellContainer;
         [SerializeField] private GameObject blockContainer;
 
-        [Header("Rules")] 
-        [SerializeField] private int minMatches = 2;
+        [Header("Rules")] [SerializeField] private int minMatches = 2;
 
-        [Header("Config")] 
-        [SerializeField] private float blockMoveDuration = 3f;
+        [Header("Config")] [SerializeField] private float blockMoveDuration = 3f;
 
-        [Header("Audio")] 
-        [SerializeField] private AudioClip clickBlock;
+        [Header("Audio")] [SerializeField] private AudioClip clickBlock;
         [SerializeField] private AudioClip errorClickBlock;
 
-        [Header("GUI")] 
-        [SerializeField] private AnimatedCounter scoreCounter;
-        
+        [Header("GUI")] [SerializeField] private AnimatedCounter scoreCounter;
+
         private GameLogic gameLogic;
         private List<Cell> cells = new List<Cell>();
         private List<BaseBlock> blocks = new List<BaseBlock>();
@@ -57,10 +49,10 @@ namespace ZigZaggle.Collapse
 
             score = 0;
             scoreCounter.CurrentValue = score;
-            
+
             if (cellContainer) cellContainer.transform.position = Vector3.zero;
             if (blockContainer) blockContainer.transform.position = Vector3.zero;
-            
+
             gameLogic = new GameLogic(minMatches);
             CreateCells();
             CreateBlocks();
@@ -81,69 +73,74 @@ namespace ZigZaggle.Collapse
             var hit = Physics2D.Raycast(mainCamera.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
             if (hit.collider == null || !hit.collider.gameObject.CompareTag("Cell"))
             {
-                SimpleSoundPlayer.Play(errorClickBlock);
                 return;
             }
-           
+
             var cell = hit.collider.gameObject.GetComponent<Cell>();
             if (!cell)
             {
-                SimpleSoundPlayer.Play(errorClickBlock);
                 return;
             }
-            
-            
-            
+
+
             StartCoroutine(ExecuteMove(cell));
         }
 
         private IEnumerator ExecuteMove(Cell cell)
         {
-            var matches = gameLogic.MakeMove(cell.Position);
-            if (matches.IsNullOrEmpty())
+            var actionGroups = gameLogic.MakeMove(cell.Position);
+            if (actionGroups.IsNullOrEmpty())
             {
                 SimpleSoundPlayer.Play(errorClickBlock);
                 yield break;
             }
-            SimpleSoundPlayer.Play(clickBlock);
-            score += matches.Count * 55;
-            scoreCounter.CurrentValue = score;
-            DestroyColoredBlocks(matches);
-            yield return new WaitForSeconds(matches.IsNullOrEmpty() ? 0 : 0.2f);
-            var gravityResult = gameLogic.ApplyGravity();
-            for (var i = 0; i < gravityResult.Count; i++)
-            {
-                if (i != 0)
-                {
-                    yield return new WaitForSeconds(blockMoveDuration);
-                }
-                MoveBlocks(gravityResult[i]);
-            }            
-            
-        }
 
-        private void MoveBlocks(List<GravityMovement> movements)
-        {
-            if (movements.IsNullOrEmpty()) return;
-            foreach (var move in movements)
+            for (var i = 0; i < actionGroups.Count; i++)
             {
-                var block = FindByPosition(move.fromPos);
-                if (!block) continue;
-                block.Position = move.toPos;
-                block.Move(GetCellPosition(move.toPos.x, move.toPos.y), blockMoveDuration);
+                var group = actionGroups[i];
+                switch (group.Type)
+                {
+                    case GroupedLogicActions.GroupType.Remove:
+                        SimpleSoundPlayer.Play(clickBlock);
+                        var matches = group.Actions;
+                        score += matches.Count * 55;
+                        scoreCounter.CurrentValue = score;
+                        DestroyColoredBlocks(matches);
+                        yield return new WaitForSeconds(i == actionGroups.Count - 1 ? 0 : 0.2f);
+                        break;
+                    case GroupedLogicActions.GroupType.Move:
+                        MoveBlocks(group.Actions);
+                        yield return new WaitForSeconds(i == actionGroups.Count - 1 ? 0 : blockMoveDuration);
+                        break;
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             }
         }
 
-        private void DestroyColoredBlocks(List<Cell2D<Block>> matches)
+        private void MoveBlocks(IList<ILogicAction> movements)
+        {
+            if (movements.IsNullOrEmpty()) return;
+            foreach (var m in movements)
+            {
+                var move = (LogicActionMove) m;
+                var block = FindByPosition(move.FromPos);
+                if (!block) continue;
+                block.Position = move.ToPos;
+                block.Move(GetCellPosition(move.ToPos.x, move.ToPos.y), blockMoveDuration);
+            }
+        }
+
+        private void DestroyColoredBlocks(IList<ILogicAction> matches)
         {
             if (matches.IsNullOrEmpty()) return;
             var blockToDestroy = new List<Block>();
             foreach (var m in matches)
             {
-                var block = FindByPosition(m.Position);
+                var match = (LogicActionRemove) m;
+                var block = FindByPosition(match.Cell.Position);
                 ExplodeBlock(block);
             }
-            
         }
 
         private static void ExplodeBlock(BaseBlock block)
@@ -166,8 +163,7 @@ namespace ZigZaggle.Collapse
         }
 
         #region Creation
-        
-        
+
         private void CreateCells()
         {
             for (var y = 0; y < gameLogic.Height; y++)
@@ -219,7 +215,7 @@ namespace ZigZaggle.Collapse
             var idx = gameLogic.Grid.CellIndex(x, y);
             return gameLogic.Grid.IsValid(idx) ? cells[idx].transform.position : Vector3.negativeInfinity;
         }
-        
+
         private Cell CreateCellGo(int x, int y)
         {
             var idx = gameLogic.Grid.CellIndex(x, y);
@@ -238,11 +234,7 @@ namespace ZigZaggle.Collapse
 
             return cell;
         }
-        
-        #endregion
 
-       
+        #endregion
     }
-    
-    
 }

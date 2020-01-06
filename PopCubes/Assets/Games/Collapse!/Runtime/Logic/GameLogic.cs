@@ -29,8 +29,9 @@ namespace ZigZaggle.Collapse
 
         #region Logic
 
-        public List<Cell2D<Block>> MakeMove(Vector2Int position)
+        public List<GroupedLogicActions> MakeMove(Vector2Int position)
         {
+            var result = new List<GroupedLogicActions>();
             var cell2d = Grid.Cell(position);
             if (cell2d.Data.type != BlockTypes.Normal) return null;
 
@@ -38,26 +39,42 @@ namespace ZigZaggle.Collapse
                 (block, block1) => block.type == block1.type && block.color == block1.color);
             if (matches.IsNullOrEmpty() || matches.Count < minMatches) return null;
 
+            var removeActions = new GroupedLogicActions(GroupedLogicActions.GroupType.Remove);
             foreach (var m in matches)
             {
-                Debug.Log("Match " + m.Position.x + ", " + m.Position.y + " " + m.Data.color);
                 Grid.SetData(m.Position, new Block(BlockTypes.Empty));
+                removeActions.Add(new LogicActionRemove(m));
+            }
+            result.Add(removeActions);
+            
+            var vertical = ApplyVerticalGravity();
+            if (!vertical.IsNullOrEmpty())
+            {
+                var movementActions = CreateMoveActionGroup(vertical);
+                result.Add(movementActions);
             }
 
-            DebugGrid("Move");
-            return matches;
-        }
-
-        public List<List<GravityMovement>> ApplyGravity()
-        {
-            var result = new List<List<GravityMovement>>();
-            var vertical = ApplyVerticalGravity();
-            if (!vertical.IsNullOrEmpty()) result.Add(vertical);
             var horizontal = ApplyHorizontalGravity();
-            if (!horizontal.IsNullOrEmpty()) result.Add(horizontal);
+            if (!horizontal.IsNullOrEmpty())
+            {
+                var movementActions = CreateMoveActionGroup(horizontal);
+                result.Add(movementActions);
+            }
+
             return result;
         }
-        
+
+        private static GroupedLogicActions CreateMoveActionGroup(List<GravityMovement> movements)
+        {
+            var movementActions = new GroupedLogicActions(GroupedLogicActions.GroupType.Move);
+            foreach (var move in movements)
+            {
+                movementActions.Add(new LogicActionMove(move));
+            }
+
+            return movementActions;
+        }
+
         protected List<GravityMovement> ApplyVerticalGravity()
         {
             return verticalGravityMaker.Apply(Grid,
